@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <div th:replace="layout/layout::bootstrapCore"></div>
+</head>
+<style>
+    input {
+        margin-bottom: 15px;
+    }
+
+    label {
+        margin-bottom: 25px;
+    }
+
+    body {
+        background-image: url("https://img2.thuthuatphanmem.vn/uploads/2018/12/30/background-hoa-la-dep_110637914.jpeg");
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: cover;
+    }
+</style>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#newBookForm').submit(function (event) {
+            let id = $('#id').val();
+            let name = $('#name').val();
+            let author = $('#author').val();
+            let description = $('#description').val();
+            let json = {"id":id,"name": name, "author": author, "description": description};
+            $.ajax({
+                type: "Post",
+                contentType: "application/json",
+                url: "/editBook",
+                dataType: 'json',
+                cache: false,
+                data: JSON.stringify(json),
+                timeout: 60000,
+                success: function (book) {
+                    let response = "Updated "
+                    response += book.name;
+                    $("#createdResponse").html(response);
+                    $('#name').val('');
+                    $('#author').val('');
+                    $('#description').val('');
+                }
+            });
+            event.preventDefault();
+        });
+    });
+</script>
+<body>
+<div class="container" style="margin-top: 10%">
+    <fieldset style="height: fit-content;">
+        <legend style="text-shadow: 2px 2px 6px; color: darkred; margin-left: 35%"><h3>New Book Entry</h3></legend>
+        <div  id="createdResponse" style="color: crimson;font-weight: bolder; margin-left: 40%"></div>
+        <form th:object="${book}" id="newBookForm">
+            <div class="row">
+                <div class="col-3"></div>
+                <div class="col-1">
+                    <label>Name:&nbsp;</label>
+                    <br>
+                    <label>Author:&nbsp;</label>
+                    <br>
+                    <label>Description:&nbsp;</label>
+                    <br>
+                </div>
+
+                <div class="col-5">
+                    <input hidden type="text" th:field="*{id}">
+                    <input type="text" th:field="*{name}">
+                    <br>
+                    <input type="text" th:field="*{author}">
+                    <br>
+                    <textarea type="text" th:field="*{description}"></textarea>
+                    <br>
+                </div>
+            </div>
+            <div class="row" style=" margin-top: 15px">
+                <div class="col-3"></div>
+                <div class="col-1">
+                    <a th:href="@{/}">
+                        <button type="button" class="btn-outline-danger btn-lg"><i class="fa fa-reply"
+                                                                                   aria-hidden="true"></i></button>
+                    </a>
+                </div>
+                <div class="col-1">
+                    <button type="submit" class="btn-outline-dark btn-lg" onclick="return confirm('Are You Sure?')"><i
+                            class="fa fa-pencil-square" aria-hidden="true"></i></button>
+                </div>
+            </div>
+        </form>
+    </fieldset>
+</div>
+</body>
+</html>

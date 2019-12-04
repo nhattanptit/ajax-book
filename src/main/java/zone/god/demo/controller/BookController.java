@@ -46,4 +46,18 @@ public class BookController {
         return bookService.deleteV2(id);
     }
 
+    @GetMapping("{id}/editBook")
+    public ModelAndView getSelectedBookEditForm(@PathVariable int id){
+        Book book = bookService.findById(id);
+        ModelAndView modelAndView = new ModelAndView("edit");
+        modelAndView.addObject("book",book);
+        return modelAndView;
+    }
+
+    @PostMapping(value = "/editBook",produces = MediaType.APPLICATION_JSON_VALUE,consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public Book EditSelectedBook(@RequestBody Book book){
+        return bookService.saveV2(book);
+    }
+
 }

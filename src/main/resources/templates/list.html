@@ -51,6 +51,28 @@
     });
 </script>
 <body>
+<nav class="navbar fixed-top navbar-expand-lg navbar-light bg-dark" style="color: white">
+    <a class="navbar-brand disabled" href="#">Navbar</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" th:href="@{/}">
+                    Home
+                </a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" th:href="@{/newBook}">
+                    Add new book
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>
 <div class="container" style="margin-top: 5%">
     <div  id="Resp" style="color: crimson;font-weight: bolder; margin-left: 40%"></div>
     <div class="row" style="width: max-content">
