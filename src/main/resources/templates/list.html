@@ -28,10 +28,11 @@
 </style>
 <script type="text/javascript">
     $(document).ready(function () {
-        let deleteA= $("a:contains('delete')");
-        $(deleteA).click(function (event) {
+        let deleteA= $("a[href$='deleteBook']");
+        let btn = $(".btn-outline-danger");
+        $(btn).click(function (event) {
             $.ajax({
-                url: $(event.target).attr("href"),
+                url: $(deleteA).attr("href"),
                 type: "POST",
                 beforeSend: function (xhr) {
                     xhr.setRequestHeader("Accept", "application/json");
@@ -71,12 +72,13 @@
                         <td th:text="${book.getName()}"></td>
                         <td th:text="${book.getAuthor()}"></td>
                         <td th:text="${book.getDescription()}"></td>
-                        <td><a th:href="@{__${book.getId()}__/editBook}">
+                        <td><a class="deleteLink" th:href="@{__${book.getId()}__/editBook}">
                             <button class="btn-outline-dark btn-lg" type="button"><i class="fa fa-pencil-square"
                                                                                      aria-hidden="true"></i></button>
                         </a></td>
                         <td><a th:href="@{/__${book.getId()}__/deleteBook}" onclick="return confirm('Are You Sure?')">
-                            delete
+                            <button class="btn-lg btn-outline-danger" type="button"><i class="fa fa-bitbucket-square"
+                                                                                       aria-hidden="true"></i></button>
                         </a></td>
                     </tr>
                 </table>
